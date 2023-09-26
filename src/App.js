@@ -19,6 +19,7 @@ const App = () => {
 					<img
 						className='Movie-image'
 						src={`${process.env.REACT_APP_BASEIMGURL}/${movie.poster_path}`}
+						alt=''
 					/>
 					<div className='Movie-date'>release: {movie.release_date}</div>
 					<div className='Movie-rate'>{movie.vote_average}</div>
@@ -27,14 +28,17 @@ const App = () => {
 		});
 	};
 
-	const search = (q) => {
-		console.log({ q });
+	const search = async (q) => {
+		if (q.length > 3) {
+			const query = await searchMovie(q);
+			setPopularMovies(query.results);
+		}
 	};
 
 	return (
 		<div className='App'>
 			<header className='App-header'>
-				<h1>MOVIES</h1>
+				<h1>MOVIE LIST</h1>
 				<input
 					placeholder='Cari Film...'
 					className='Movie-search'
